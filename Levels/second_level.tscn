@@ -198,9 +198,6 @@ script = ExtResource("1_r5qoo")
 current_checkpoint = NodePath("Interactables/Checkpoint")
 current_player = NodePath("Player")
 
-[node name="Player" parent="." instance=ExtResource("2_rlhak")]
-position = Vector2(1229, 530)
-
 [node name="TileMapLayer" type="TileMapLayer" parent="."]
 texture_filter = 1
 position = Vector2(0, -3)
@@ -1000,6 +997,9 @@ position = Vector2(9953, -2202)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="TeleportTo"]
 shape = SubResource("RectangleShape2D_nlkql")
+
+[node name="Player" parent="." instance=ExtResource("2_rlhak")]
+position = Vector2(1229, 530)
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("32_vv37u")
