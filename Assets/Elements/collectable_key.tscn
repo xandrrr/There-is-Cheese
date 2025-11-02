@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=3 uid="uid://xxtslfcfdpcw"]
+
+[ext_resource type="Script" uid="uid://cs5nigpxyvaj0" path="res://Assets/Scripts/collectable_key.gd" id="1_qdc21"]
+[ext_resource type="Texture2D" uid="uid://d0o4pm5v6mq3n" path="res://Assets/Sprites/Interactables/blue_key.png" id="2_d6b2r"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bo5at"]
+
+[node name="CollectableKey" type="Area2D"]
+texture_filter = 1
+scale = Vector2(4, 4)
+script = ExtResource("1_qdc21")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_d6b2r")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_bo5at")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

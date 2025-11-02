@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://c0oy7vfpbt85m"]
+
+[ext_resource type="Script" uid="uid://cx8i7nyf6ndl6" path="res://Assets/Scripts/ladder.gd" id="1_hjgbq"]
+
+[node name="Ladder" type="Area2D"]
+script = ExtResource("1_hjgbq")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_exited" from="." to="." method="_on_body_exited"]

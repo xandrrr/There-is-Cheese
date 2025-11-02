@@ -1,0 +1,35 @@
+[gd_scene load_steps=4 format=3 uid="uid://bht3ei4md1tcc"]
+
+[ext_resource type="Script" uid="uid://c0ghhv4f5mj6f" path="res://Assets/Scripts/victory_screen.gd" id="1_u5l5x"]
+[ext_resource type="Texture2D" uid="uid://bdqpetdgtrjjn" path="res://Assets/Sprites/Backgrounds/victory_screen_2.png" id="2_e7enc"]
+[ext_resource type="AudioStream" uid="uid://vwtrwd2l1a0l" path="res://Assets/Sounds/bvmPixelland.mp3" id="3_e7enc"]
+
+[node name="VictoryScreen" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_u5l5x")
+
+[node name="Background" type="TextureRect" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("2_e7enc")
+
+[node name="Button" type="Button" parent="."]
+modulate = Color(1, 1, 1, 0)
+custom_minimum_size = Vector2(1000, 150)
+layout_mode = 0
+offset_left = 371.0
+offset_top = 872.0
+offset_right = 1571.0
+offset_bottom = 1072.0
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_e7enc")
+autoplay = true
+
+[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]

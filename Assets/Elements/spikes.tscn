@@ -1,0 +1,26 @@
+[gd_scene load_steps=5 format=3 uid="uid://cc1785olf671g"]
+
+[ext_resource type="Script" uid="uid://cxw2k03xe6ilv" path="res://Assets/Scripts/spikes.gd" id="1_qb2hv"]
+[ext_resource type="Script" uid="uid://bfgylkmq31rfa" path="res://Assets/Scripts/hurtbox.gd" id="2_j2lho"]
+[ext_resource type="Texture2D" uid="uid://xddohffphe5b" path="res://Assets/Sprites/Interactables/spikes.png" id="3_gicxr"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qpgvk"]
+size = Vector2(16, 7)
+
+[node name="Spikes" type="Node2D" node_paths=PackedStringArray("hurtbox")]
+scale = Vector2(4, 4)
+script = ExtResource("1_qb2hv")
+hurtbox = NodePath("Hurtbox")
+
+[node name="Hurtbox" type="Area2D" parent="."]
+script = ExtResource("2_j2lho")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
+position = Vector2(0, 0.5)
+shape = SubResource("RectangleShape2D_qpgvk")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
+texture = ExtResource("3_gicxr")
+
+[connection signal="body_entered" from="Hurtbox" to="Hurtbox" method="_on_body_entered"]

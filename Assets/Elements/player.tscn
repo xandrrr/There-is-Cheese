@@ -1,0 +1,194 @@
+[gd_scene load_steps=20 format=3 uid="uid://bt066ye3sv2ap"]
+
+[ext_resource type="Script" uid="uid://whmufq42ki44" path="res://Assets/Scripts/player.gd" id="1_q22xt"]
+[ext_resource type="Texture2D" uid="uid://dr4yoci4sy81p" path="res://Assets/Sprites/TileMaps/tilemap-characters_packed.png" id="2_q22xt"]
+[ext_resource type="Script" uid="uid://da8jvx0yidu04" path="res://Assets/Scripts/state_manager.gd" id="3_7bdoi"]
+[ext_resource type="Script" uid="uid://pqs7knculbkb" path="res://Assets/Scripts/running.gd" id="4_i6ppp"]
+[ext_resource type="Script" uid="uid://cgoyge3cmngx6" path="res://Assets/Scripts/airborne.gd" id="5_5s55i"]
+[ext_resource type="Script" uid="uid://dvqnxw2vfcct3" path="res://Assets/Scripts/climbing.gd" id="6_fm55l"]
+[ext_resource type="Texture2D" uid="uid://bpox00h27ed3v" path="res://Assets/Sprites/Interactables/checkpoint_reached.png" id="7_qo7fr"]
+[ext_resource type="AudioStream" uid="uid://dtkceacyiqfqy" path="res://Assets/Sounds/unlock.mp3" id="8_7bdoi"]
+[ext_resource type="AudioStream" uid="uid://bkunwu50kt72x" path="res://Assets/Sounds/hurt.wav" id="8_fm55l"]
+[ext_resource type="AudioStream" uid="uid://c3ghv4kdflsix" path="res://Assets/Sounds/jump.wav" id="9_qatta"]
+[ext_resource type="AudioStream" uid="uid://bgx7ccqdqlsob" path="res://Assets/Sounds/key_pickup.wav" id="10_vrxnm"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_q22xt"]
+size = Vector2(11, 16)
+
+[sub_resource type="Animation" id="Animation_qo7fr"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_q22xt"]
+resource_name = "airborne"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [1]
+}
+
+[sub_resource type="Animation" id="Animation_7bdoi"]
+resource_name = "grounded"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_i6ppp"]
+_data = {
+&"RESET": SubResource("Animation_qo7fr"),
+&"airborne": SubResource("Animation_q22xt"),
+&"grounded": SubResource("Animation_7bdoi")
+}
+
+[sub_resource type="Animation" id="Animation_5s55i"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CheckpointSprite:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CheckpointSprite:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_i6ppp"]
+resource_name = "checkpoint_reached"
+length = 2.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CheckpointSprite:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1, 2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CheckpointSprite:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_fm55l"]
+_data = {
+&"RESET": SubResource("Animation_5s55i"),
+&"checkpoint_reached": SubResource("Animation_i6ppp")
+}
+
+[node name="Player" type="CharacterBody2D"]
+script = ExtResource("1_q22xt")
+max_speed = 400.0
+friction = 8.0
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
+scale = Vector2(1.6, 1.6)
+texture = ExtResource("2_q22xt")
+hframes = 9
+vframes = 3
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 1)
+scale = Vector2(2, 2)
+shape = SubResource("RectangleShape2D_q22xt")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(1.75, 1.75)
+
+[node name="StateManager" type="Node" parent="." node_paths=PackedStringArray("initial_state", "player_character")]
+script = ExtResource("3_7bdoi")
+initial_state = NodePath("Airborne")
+player_character = NodePath("..")
+
+[node name="Running" type="Node" parent="StateManager"]
+script = ExtResource("4_i6ppp")
+
+[node name="Airborne" type="Node" parent="StateManager"]
+script = ExtResource("5_5s55i")
+
+[node name="Climbing" type="Node" parent="StateManager"]
+script = ExtResource("6_fm55l")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_i6ppp")
+}
+
+[node name="CheckpointAnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_fm55l")
+}
+
+[node name="CheckpointSprite" type="Sprite2D" parent="."]
+visible = false
+texture_filter = 1
+position = Vector2(0, -43)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("7_qo7fr")
+
+[node name="HurtSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("8_fm55l")
+
+[node name="JumpSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("9_qatta")
+
+[node name="KeyPickupSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("10_vrxnm")
+
+[node name="UnlockSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("8_7bdoi")
+
+[connection signal="climbing_toggled" from="." to="StateManager" method="_on_player_climbing_toggled"]

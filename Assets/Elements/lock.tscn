@@ -1,0 +1,28 @@
+[gd_scene load_steps=5 format=3 uid="uid://c3whvwojtdcgh"]
+
+[ext_resource type="Script" uid="uid://d4at6jwkxv65q" path="res://Assets/Scripts/lock.gd" id="1_g4er1"]
+[ext_resource type="Texture2D" uid="uid://b1uhlanxry1mk" path="res://Assets/Sprites/Interactables/blue_lock.png" id="2_s50dr"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ovvij"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wpjbu"]
+
+[node name="Lock" type="StaticBody2D"]
+texture_filter = 1
+scale = Vector2(4, 4)
+script = ExtResource("1_g4er1")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
+texture = ExtResource("2_s50dr")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_ovvij")
+
+[node name="Hitbox" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
+scale = Vector2(1.25, 1.25)
+shape = SubResource("RectangleShape2D_wpjbu")
+
+[connection signal="body_entered" from="Hitbox" to="." method="_on_hitbox_body_entered"]
